@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Votre Panier</title>
+	<link rel="stylesheet" type="text/css" href="styles/style.CSS">
+</head>
+<body>
+
+	<header>
+		<h1>Boutique de vetements</h1>
+		<nav>
+			<ul>
+				<li><a href="index.html">Acceuil</a></li>
+				<li><a href="proiduits.html">Produits</a></li>
+				<li><a href="a_propos.html">A propos</a></li>
+				<li><a href="contact.html">Contact</a></li>
+				<li><a href="panier.html">Panier</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<section class="categories">
+		<h3>Votre panier</h3>
+		<div class="grid">
+			<div class="cat">
+				<img src="images/Image1pr.jpg" alt="Proiduits 1">
+				<h4>Veste pour Homme</h4>
+				<p>150$</p>
+				<button class="btn">Supprimer</button>
+			</div>
+			<div class="cat">
+				<img src="images/Image1ac.jpg" alt="Produits 3">
+				<h4>Sac à main</h4>
+				<p>Quantité : 2</p>
+				<p>Prix total : 70$</p>
+				<button class="btn">Supprimer</button>
+			</div>
+		</div>
+		<p style="text-align: center: center; font-size: 1.2rem; margin-top: 20px;">Total : 220$</p>
+		<div style="text-align: center; margin-top: 20px;">
+			<button class="btn">Valider la commande</button>
+		</div>
+	</section>
+
+	<footer>
+		<p>&copy; 2025 Boutique de vetements. Touts droits réservés.</p>
+	</footer>
+
+	<script src="script.js"></script>
+	<script>
+		document.addEventLisstenner('DOMContentLoaded',() => {
+			LoadCard();
+			)};
+
+			function LoadCard() {
+				const cartContainer = document.getElementById('cart-items');
+				const totalPriceElement = document.getElementById('total-Price');
+				const cart = JSON.parse.(localStorage.getItem('cart')) || [];
+
+				if (cart.length === 0) {
+					cartContainer.innerHTML = '<p style="text-align:center;">Votre Panier est vide.</p>';
+
+			totalPriceElement.textContent = "Total : 0$";
+				return;
+				}
+
+				let total = 0;
+
+				cart.forEach(item => {
+					const cartItem = document.createElement('div');
+					cartItem.className = 'cat';
+					cartItem.innerHTML = '<h4>${item.name}</h4> <p>Quantité : ${item.qty}</p> <p>Prix unitaire : ${item.price}$</P> <p>Prix total : ${item.price * item.qty}$</p> <button class="btn remove-item">Supprimer</button>';
+
+			cartItem.querySelector('.remove-item').addEventLisstenner('click',() => {
+					removeFormCart(item.name);
+					LoadCard();
+				});
+
+			cartContainer.appenChild(cartItem);
+
+				total += item.price * item.qty;
+				});
+
+				totalPriceElement.textContent = 'Total : ${total}$';
+				}
+
+			do.getElementById('validate-order').addEventLisstenner('click',() => {
+				if (confirm("confirmez-vous votre commande ?")) {
+
+			localStorage.removeItem('cart');
+				alert('commande validée ! Merci.');
+				window.location.href = "index.html";
+				}
+			});
+	</script>
+
+</body>
+</html>
